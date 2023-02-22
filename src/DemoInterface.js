@@ -118,7 +118,7 @@ function DemoInterface() {
           <button className='demoTabLink'style={{width: '50%', border: '3px solid gray'}} onClick={handleOutputClick}>Select .out file</button>
           <button className='demoTabLink'style={{width: '50%', border: '3px solid gray'}} onClick={handleDemoOutputClick}>Use demo Example1.out</button>
         </div>
-        <h3>.OUT file in text format:</h3>
+        <h3>TensorFlow Results:</h3>
         <DemoCode swmmInp={swmmInp} setSwmmInp={setSwmmInp} swmmData={swmmDat} swmmArrBuff={swmmArrBuff}/>
       </header>
     </div>
