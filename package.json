@@ -6,6 +6,7 @@
   "dependencies": {
     "@fileops/swmm-node": "^0.0.9",
     "@fileops/swmm-wasm-web": "^0.0.4",
+    "@tensorflow/tfjs": "^4.2.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",

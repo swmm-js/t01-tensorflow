@@ -5,19 +5,35 @@ import {useRef, useState} from 'react'
 import { SwmmOut } from "@fileops/swmm-node"
 
 function DemoInterface() {
+  // If this demo uses an input file, this ref is for selecting a new input file.
   const inputRef = useRef(null)
-  // Change the following line to the name of your .out
-  // file and place your .out file in the src directory.
-  // For a more complex file structure, you should make an 
-  // input folder and place your .out files there.
-  const [swmmObj, setSwmmObj] = useState(null)
+  // If this demo uses an output file, this ref is for selecting a new output file.
+  const outputRef = useRef(null)
+  // If this demo uses a dat file, this ref is for selecting a new dat file.
+  const datRef = useRef(null)
+  // Array Buffer containing data from the .out file.
+  const [swmmArrBuff, setSwmmArrBuff] = useState(null)
+  // Input string containing the contents of a .inp file.
+  const [swmmInp, setSwmmInp] = useState(null)
+  // Dat file for raingage or timeseries data.
+  const [swmmDat, setSwmmDat] = useState(null)
 
-  const handleClick = () => {
+  const handleInputClick = () => {
     // open file input box on click.
     inputRef.current.click()
   }
 
-  const handleFileChange = event => {
+  const handleOutputClick = () => {
+    // open file input box on click.
+    outputRef.current.click()
+  }
+
+  const handleDatClick = () => {
+    // open file input box on click.
+    datRef.current.click()
+  }
+
+  const handleOutputFileChange = event => {
     const fileObj = event.target.files && event.target.files[0]
 
     if (!fileObj) return;
@@ -27,18 +43,48 @@ function DemoInterface() {
     const reader = new FileReader()
     reader.onload = (e) => {
       const res = e.target.result
-      setSwmmObj(new SwmmOut(res))
+      setSwmmArrBuff(new SwmmOut(res))
     }
     reader.readAsArrayBuffer(fileObj)
   }
 
-  const handleDemoClick = event => {
+  const handleInputFileChange = event => {
+    const fileObj = event.target.files && event.target.files[0]
+
+    if (!fileObj) return;
+
+    event.target.value = null
+  
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      const res = e.target.result
+      setSwmmInp(res)
+    }
+    reader.readAsText(fileObj)
+  }
+
+  const handleDatFileChange = event => {
+    const fileObj = event.target.files && event.target.files[0]
+
+    if (!fileObj) return;
+
+    event.target.value = null
+  
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      const res = e.target.result
+      setSwmmDat(res)
+    }
+    reader.readAsText(fileObj)
+  }
+
+  const handleDemoOutputClick = event => {
     async function showFile () {
       // Read the output file
       const response = await fetch('./Example1.out')
       await response.arrayBuffer()
         .then((res)=>{
-          setSwmmObj(new SwmmOut(res))
+          setSwmmArrBuff(new SwmmOut(res))
       })
     }
     showFile()
@@ -47,18 +93,33 @@ function DemoInterface() {
   return (
     <div className="App">
       <header className="App-header">
+        {/* Invisible file selection box for .inp files. */}
         <input 
           style={{display: 'none'}}
           ref={inputRef}
           type="file"
-          onChange={handleFileChange}
+          onChange={handleInputFileChange}
+        />
+        {/* Invisible file selection box for .out files. */}
+        <input 
+          style={{display: 'none'}}
+          ref={outputRef}
+          type="file"
+          onChange={handleOutputFileChange}
+        />
+        {/* Invisible file selection box for .dat files. */}
+        <input 
+          style={{display: 'none'}}
+          ref={datRef}
+          type="file"
+          onChange={handleDatFileChange}
         />
         <div className='demoTab'>
-          <button className='demoTabLink'style={{width: '50%', border: '3px solid gray'}} onClick={handleClick}>Select .out file</button>
-          <button className='demoTabLink'style={{width: '50%', border: '3px solid gray'}} onClick={handleDemoClick}>Use demo Example1.out</button>
+          <button className='demoTabLink'style={{width: '50%', border: '3px solid gray'}} onClick={handleOutputClick}>Select .out file</button>
+          <button className='demoTabLink'style={{width: '50%', border: '3px solid gray'}} onClick={handleDemoOutputClick}>Use demo Example1.out</button>
         </div>
         <h3>.OUT file in text format:</h3>
-        <DemoCode swmmData={swmmObj} />
+        <DemoCode swmmInp={swmmInp} setSwmmInp={setSwmmInp} swmmData={swmmDat} swmmArrBuff={swmmArrBuff}/>
       </header>
     </div>
   );

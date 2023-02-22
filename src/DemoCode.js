@@ -2,30 +2,30 @@
 import { SwmmOut } from "@fileops/swmm-node"
 import { useState, useEffect } from "react"
 
-export default function DisplayOutAsText({swmmData}) {
+export default function DisplayOutAsText({swmmArrBuff}) {
 const [outText, setOutText] = useState()
 
 useEffect(()=>{
   let result = ''
-  if(swmmData != null)
-    result = processOut(swmmData)
+  if(swmmArrBuff != null)
+    result = processOut(swmmArrBuff)
   setOutText(result)
-}, [swmmData])
+}, [swmmArrBuff])
 
 
 // Process an array buffer. This is usually the 
 // buffer contents of a .out file.
-function processOut(swmmData) {
+function processOut(swmmArrBuff) {
   // Create a swmmOut oubject from the contents of the .out file.
 
   // Process all sections of the .out file.
   let outString =
-    stringOpeningRecords     (swmmData)
-    + stringObjectIDs        (swmmData)
-    + stringObjectProperties (swmmData)
-    + stringReportingInterval(swmmData)
-    + stringComputedResults  (swmmData)
-    + stringClosingRecords   (swmmData)
+    stringOpeningRecords     (swmmArrBuff)
+    + stringObjectIDs        (swmmArrBuff)
+    + stringObjectProperties (swmmArrBuff)
+    + stringReportingInterval(swmmArrBuff)
+    + stringComputedResults  (swmmArrBuff)
+    + stringClosingRecords   (swmmArrBuff)
 
     return outString
 }
