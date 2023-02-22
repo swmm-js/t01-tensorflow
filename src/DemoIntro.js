@@ -14,7 +14,7 @@ const DemoIntro = () => {
 <SiteNavBar />
   <div >
     <div style={UIBackground}><h1>TensorFlow.js: Basic Methods</h1>
-      <p>This demo features swmmNode and swmmWasm model basic operations using TensorFlow. Click on the <strong>'Select .inp file'</strong> button to pick a <strong>.inp</strong> file to investigate. Keep in mind that web browsers can only handle so much memory, so if your <strong>.inp</strong> file is very large or requires a long time to run, you may want to use swmmWasm and swmmNode via node.js.
+      <p>This demo features swmmNode and swmmWasm model basic operations using TensorFlow. Click on the <strong>'Select .dat file'</strong> button to pick a <strong>.dat</strong> file to investigate. Keep in mind that web browsers can only handle so much memory, so if your <strong>.dat</strong> file is very large or requires a long time to run, you may want to use swmmWasm and swmmNode via node.js.
       </p>
       <p>
         The results are a simple demo of some of the uses of TensorFlow with EPA-SWMM files.  You can find swmmNode and swmmWasm compatible JavaScript below the translation, and you can always check out a copy of either swmmNode or swmmWasm for your own uses at the GitHub repo:

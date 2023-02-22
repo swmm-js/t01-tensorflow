@@ -2,7 +2,7 @@
 import './App.css'
 import DemoCode from './DemoCode'
 import {useRef, useState} from 'react'
-import { SwmmOut } from "@fileops/swmm-node"
+import { SwmmOut, SwmmDat } from "@fileops/swmm-node"
 
 function DemoInterface() {
   // If this demo uses an input file, this ref is for selecting a new input file.
@@ -90,6 +90,19 @@ function DemoInterface() {
     showFile()
   }
 
+  const handleDemoDatClick = event => {
+    async function showFile () {
+      // Read the output file
+      const response = await fetch('./Example1.dat')
+      await response.text()
+        .then((res)=>{
+          console.log(res)
+          setSwmmDat(new SwmmDat(res))
+      })
+    }
+    showFile()
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -115,8 +128,8 @@ function DemoInterface() {
           onChange={handleDatFileChange}
         />
         <div className='demoTab'>
-          <button className='demoTabLink'style={{width: '50%', border: '3px solid gray'}} onClick={handleOutputClick}>Select .out file</button>
-          <button className='demoTabLink'style={{width: '50%', border: '3px solid gray'}} onClick={handleDemoOutputClick}>Use demo Example1.out</button>
+          <button className='demoTabLink'style={{width: '50%', border: '3px solid gray'}} onClick={handleDatClick}>Select .dat file</button>
+          <button className='demoTabLink'style={{width: '50%', border: '3px solid gray'}} onClick={handleDemoDatClick}>Use demo Example1.dat</button>
         </div>
         <h3>TensorFlow Results:</h3>
         <DemoCode swmmInp={swmmInp} setSwmmInp={setSwmmInp} swmmData={swmmDat} swmmArrBuff={swmmArrBuff}/>
